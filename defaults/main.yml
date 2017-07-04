@@ -4,3 +4,4 @@ docker_clusterstore: no
 dockerpy: no
 vagrant: no
 docker_storagedriver: devicemapper
+docker_insecureregistries: []
