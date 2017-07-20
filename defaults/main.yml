@@ -6,3 +6,5 @@ vagrant: no
 default_docker_config:
   storage-driver: devicemapper
   log-level: info
+# for legacy version of docker this should be "/usr/bin/docker daemon"
+docker_daemon_cmd: /usr/bin/dockerd
