@@ -5,11 +5,11 @@
   tags:
     - always
 
-- include: preflight.yml
+- include_tasks: preflight.yml
 
-- include: install.yml
+- include_tasks: install.yml
 
-- include: configure.yml
+- include_tasks: configure.yml
 
 - name: ensure starts on system boot
   systemd:
