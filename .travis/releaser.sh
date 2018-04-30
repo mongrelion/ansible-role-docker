@@ -1,4 +1,3 @@
-
 #!/bin/bash
 #
 # Copyright (C) 2018 Pawel Krupa (@paulfantom) - All Rights Reserved
