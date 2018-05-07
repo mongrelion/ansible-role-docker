@@ -6,11 +6,11 @@ driver:
 lint:
   name: yamllint
 platforms:
-  - name: bionic
-    image: paulfantom/ubuntu-molecule:18.04
-    privileged: true
-    volumes:
-      - /sys/fs/cgroup:/sys/fs/cgroup:ro
+#  - name: bionic
+#    image: paulfantom/ubuntu-molecule:18.04
+#    privileged: true
+#    volumes:
+#      - /sys/fs/cgroup:/sys/fs/cgroup:ro
   - name: xenial
     image: paulfantom/ubuntu-molecule:16.04
     privileged: true
