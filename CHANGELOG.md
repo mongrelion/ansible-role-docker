@@ -8,6 +8,8 @@
 
 **Merged pull requests:**
 
+- add centos support in ci pipeline [\#54](https://github.com/mongrelion/ansible-role-docker/pull/54) ([paulfantom](https://github.com/paulfantom))
+- Allow install docker also on RHEL OS [\#53](https://github.com/mongrelion/ansible-role-docker/pull/53) ([petr-balogh](https://github.com/petr-balogh))
 - Fix \_\_pycache\_\_ in .gitignore [\#51](https://github.com/mongrelion/ansible-role-docker/pull/51) ([Porkepix](https://github.com/Porkepix))
 - alternative test scenario [\#50](https://github.com/mongrelion/ansible-role-docker/pull/50) ([paulfantom](https://github.com/paulfantom))
 - move tests to molecule 2.x [\#49](https://github.com/mongrelion/ansible-role-docker/pull/49) ([paulfantom](https://github.com/paulfantom))
