@@ -5,6 +5,7 @@
 __pycache__/
 .molecule
 .pytest_cache
+.tox
 
 # Ignore retry files
 *.retry
