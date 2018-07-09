@@ -1,5 +1,11 @@
 # Change Log
 
+## [**Next release**](https://galaxy.ansible.com/mongrelion/docker)
+
+**Merged pull requests:**
+
+- Use role\_name in metadata [\#56](https://github.com/mongrelion/ansible-role-docker/pull/56) ([paulfantom](https://github.com/paulfantom))
+
 ## [0.2.0](https://galaxy.ansible.com/mongrelion/docker) (2018-07-09)
 **Closed issues:**
 
