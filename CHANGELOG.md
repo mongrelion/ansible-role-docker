@@ -1,13 +1,13 @@
 # Change Log
 
-## [**Next release**](https://galaxy.ansible.com/mongrelion/docker)
-
+## [0.2.0](https://galaxy.ansible.com/mongrelion/docker) (2018-07-09)
 **Closed issues:**
 
 - Clarify supported Docker versions [\#46](https://github.com/mongrelion/ansible-role-docker/issues/46)
 
 **Merged pull requests:**
 
+- use tox, ansible 2.6, and allow using remote docker host [\#55](https://github.com/mongrelion/ansible-role-docker/pull/55) ([paulfantom](https://github.com/paulfantom))
 - add centos support in ci pipeline [\#54](https://github.com/mongrelion/ansible-role-docker/pull/54) ([paulfantom](https://github.com/paulfantom))
 - Allow install docker also on RHEL OS [\#53](https://github.com/mongrelion/ansible-role-docker/pull/53) ([petr-balogh](https://github.com/petr-balogh))
 - Fix \_\_pycache\_\_ in .gitignore [\#51](https://github.com/mongrelion/ansible-role-docker/pull/51) ([Porkepix](https://github.com/Porkepix))
