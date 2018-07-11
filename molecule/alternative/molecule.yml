@@ -1,0 +1,42 @@
+---
+dependency:
+  name: galaxy
+driver:
+  name: docker
+lint:
+  name: yamllint
+platforms:
+  - name: xenial
+    image: paulfantom/ubuntu-molecule:16.04
+    docker_host: "${DOCKER_HOST:-unix://var/run/docker.sock}"
+    privileged: true
+    volumes:
+      - /sys/fs/cgroup:/sys/fs/cgroup:ro
+  - name: jessie
+    image: paulfantom/debian-molecule:8
+    docker_host: "${DOCKER_HOST:-unix://var/run/docker.sock}"
+    privileged: true
+    volumes:
+      - /sys/fs/cgroup:/sys/fs/cgroup:ro
+  - name: centos7
+    image: paulfantom/centos-molecule:7
+    docker_host: "${DOCKER_HOST:-unix://var/run/docker.sock}"
+    privileged: true
+    volumes:
+      - /sys/fs/cgroup:/sys/fs/cgroup:ro
+provisioner:
+  name: ansible
+  lint:
+    name: ansible-lint
+  playbooks:
+    create: ../default/create.yml
+    prepare: prepare.yml
+    converge: playbook.yml
+    destroy: ../default/destroy.yml
+scenario:
+  name: alternative
+verifier:
+  name: testinfra
+  lint:
+    name: flake8
+    enabled: true

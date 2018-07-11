@@ -1,15 +1,78 @@
 ---
+- name: install system dependencies
+  package:
+    name: "{{ item }}"
+    state: present
+  register: __ret
+  retries: 5
+  until: __ret is succeeded
+  with_items: "{{ docker_dependencies }}"
 
-- set_fact:
-    setup_script_checksum: "md5:{{ setup_script_md5_sum }}"
-  when: setup_script_md5_sum is defined and setup_script_md5_sum
+- name: remove old versions
+  package:
+    name: "{{ item }}"
+    state: absent
+  with_items:
+    - lxc-docker
+    - docker-engine
+    - docker
+    - docker-common
+    - docker.io
 
-- name: Download docker setup script for desired version
-  get_url:
-    url: "{{ setup_script_url }}"
-    dest: "/tmp/docker-setup.sh"
-    checksum: "{{ setup_script_checksum|default(omit) }}"
-    mode: 0755
+- block:
+    - name: add GPG key
+      apt_key:
+        url: "https://download.docker.com/linux/{{ docker_repo_distribution }}/gpg"
+        state: present
 
-- name: Execute docker setup script
-  shell: "/tmp/docker-setup.sh"
+    - name: add docker repository | Debian
+      apt_repository:
+        repo: "deb [arch=amd64] https://download.docker.com/linux/{{ docker_repo_distribution }} {{ ansible_distribution_release }} stable"
+        state: present
+  when: ansible_os_family == "Debian"
+
+- name: add docker repository | RedHat
+  yum_repository:
+    name: docker-ce-stable
+    description: "Docker CE Stable - $basearch"
+    baseurl: "https://download.docker.com/linux/{{ docker_repo_distribution }}/{{ ansible_distribution_major_version }}/$basearch/stable"
+    gpgcheck: true
+    gpgkey: "https://download.docker.com/linux/{{ docker_repo_distribution }}/gpg"
+  when: ansible_os_family == "RedHat" and ansible_distribution != "OracleLinux"
+
+- name: Install docker
+  package:
+    name: "{{ docker_package }}"
+    state: "{{ (docker_version == 'latest') | ternary('latest', 'present') }}"
+    update_cache: true
+  register: __ret
+  retries: 10
+  until: __ret is succeeded
+  notify:
+    - restart docker
+
+- block:
+    - name: Install pip
+      package:
+        name: python2-pip
+        state: present
+      when: ansible_os_family | lower != "debian"
+
+    - name: Install pip | Debian
+      apt:
+        name: python-pip
+        state: present
+      register: __pip
+      when: ansible_os_family | lower == "debian"
+
+    # https://stackoverflow.com/questions/27341064/how-do-i-fix-importerror-cannot-import-name-incompleteread
+    - name: Upgrade pip | Debian
+      command: pip install --upgrade pip
+      when: __pip is changed
+
+    - name: ensure docker-compose is installed
+      pip:
+        name: "{{ item }}"
+      with_items:
+        - docker-compose
+  when: docker_compose

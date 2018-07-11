@@ -1,77 +1,46 @@
+<p><img src="http://1000logos.net/wp-content/uploads/2017/07/Logo-Docker-500x394.jpg" alt="docker logo" title="docker" align="right" height="60" /></p>
+
+# Ansible role: docker
+
 [![Build Status](https://travis-ci.org/mongrelion/ansible-role-docker.svg?branch=master)](https://travis-ci.org/mongrelion/ansible-role-docker)
+[![License](https://img.shields.io/badge/license-MIT%20License-brightgreen.svg)](https://opensource.org/licenses/MIT)
+[![Ansible Role](https://img.shields.io/badge/ansible%20role-mongrelion.docker-blue.svg)](https://galaxy.ansible.com/mongrelion/docker/)
 
-docker
-=========
+## Description
 
-Install and configure Docker.
+Install and configure [docker](https://www.docker.com) containerization platform.
 
-Role Variables
---------------
+## Requirements
 
-### `docker_config`
+- Ansible >= 2.4
 
-A dict of options that are written into docker's `daemon.json` config file. See [the docs for dockerd](https://docs.docker.com/engine/reference/commandline/dockerd/) for a full list of available options.
+## Role Variables
 
-Default values: (set them in your `docker_config` to overwrite)
+All variables which can be overridden are stored in [defaults/main.yml](defaults/main.yml) file as well as in table below.
 
-    storage-driver: devicemapper
-    log-level: info
+| Name           | Default Value | Description                        |
+| -------------- | ------------- | -----------------------------------|
+| `docker_compose` | yes | Install docker-compose package |
+| `docker_proxy` | no | Enable HTTP proxy setup |
+| `docker_http_proxy` | "" | HTTP proxy server address |
+| `docker_https_proxy` | "" | HTTPS proxy server address |
+| `docker_no_proxy` | "" | Comma-separated list of hosts which won't use HTTP proxy |
+| `docker_version` | "17.06" | docker version which should be installed on target server. Can use `latest` for updates |
+| `docker_default_config` | [ storage-driver: devicemapper, log-level: info ] | Docker daemon configuration |
+| `docker_users` | [] | Add users to docker group. Users must exist before adding. Construct like `- {{ ansible_env['SUDO_USER'] \| default(ansible_user_id) }}` could be used to specify user which is used for ansible connection to host. |
 
-### `docker_version`
+## Example
 
-Specify the version of Docker to install, e.g. `1.12.6`, `17.05`.
+### Playbooks
 
-Default value: `17.03`
-
-### `setup_script_md5_sum`
-
-Default value: md5 checksum of default `docker_version` setup script (see `defaults/main.yml` for exact default value)
-
-**If you intend to install a version of Docker other than the default, you must provide an appropriate override value for this variable.**
-
-Either:
-
-1. Generate an md5 checksum for the desired version's install script
-1. If you know what you are doing and are not worried about security, set this variable to "no" or "false" to disable checksum verification of the setup script.
-
-### `setup_script_url`
-
-URL pointing to a Docker setup script that will install the specified `docker_version`.
-
-Default value: `https://releases.rancher.com/install-docker/{{ docker_version }}.sh`
-
-The default URL utilizes [Rancher Labs' version-specific, OS-agnostic setup scripts](https://github.com/rancher/install-docker), which in turn just install the appropriate version of `docker-ce` or `docker-engine` from the official Docker `apt` and `yum` repositories.
-
-### `upgrade_docker`
-
-Per default, this role will only download and run the installation script when
-Docker is not installed (or more precise: when `dockerd` is not in `$PATH`). Set
-`upgrade_docker` to `True` to override this behavior and force the install
-script to be run.
-
-So in order to upgrade Docker on managed systems, take the following steps:
-
-0. Either download a newer version of this role (with a more recent default
-   version) or update `docker_version` and `setup_script_md5_sum` in your
-   host/group vars.
-1. Run your playbook with `-e upgrade_docker=True`
-
-
-Dependencies
-------------
-
-None
-
-Example Playbook
-----------------
-Install Docker
+Just install Docker with default config
 ```yaml
 - hosts: servers
   roles:
     - mongrelion.docker
 ```
 
-Install and configure docker
+Install and configure docker daemon
 ```yaml
 - hosts: servers
   roles:
@@ -81,28 +50,44 @@ Install and configure docker
         userland-proxy: false
 ```
 
-Testing
--------
-For development, we use Vagrant.
-Bring the VM up with
+## Local Testing
 
+The preferred way of locally testing the role is to use Docker and [molecule](https://github.com/metacloud/molecule) (v2.x). You will have to install Docker on your system. See "Get started" for a Docker package suitable to for your system.
+We are using tox to simplify process of testing on multiple ansible versions. To install tox execute:
+```sh
+pip install tox
 ```
-$ vagrant up
+To run tests on all ansible versions (WARNING: this can take some time)
+```sh
+tox
 ```
-
-This will automatically run the playbooks against the virtual machine once it's up.
-After making changes to any playbook, you can test the provisioning with
-
+To run a custom molecule command on custom environment with only default test scenario:
+```sh
+tox -e py27-ansible25 -- molecule test -s default
 ```
-$ vagrant provision
-```
+For more information about molecule go to their [docs](http://molecule.readthedocs.io/en/latest/).
 
-License
--------
+If you would like to run tests on remote docker host just specify `DOCKER_HOST` variable before running tox tests.
 
-MIT
+## License
 
-Author Information
-------------------
+This project is licensed under MIT License. See [LICENSE](/LICENSE) for more details.
+
+## Author Information
 
 You can find me on Twitter: [@mongrelion](https://twitter.com/mongrelion)
+
+## Contributors
+
+- Carlos Leon ([@mongrelion](https://github.com/mongrelion))
+- Paweł Krupa ([@paulfantom](https://github.com/paulfantom))
+- Marcus Levine ([@marcusianlevine](https://github.com/marcusianlevine))
+- Manuel Hutter ([@mhutter](https://github.com/mhutter))
+- Dmitri Bichko ([@dbichko](https://github.com/dbichko))
+- Zane Westover ([@zanewestover](https://github.com/zanewestover))
+- Bruce Becker ([@brucellino](https://github.com/brucellino))
+- David Wahlstrom ([@drwahl](https://github.com/drwahl))
+- Max Oreshnikov ([@maxim0r](https://github.com/maxim0r))
+- Nicholas E. Rabenau ([@nerab](https://github.com/nerab))
+- Petr Balogh ([@petr-balogh](https://github.com/petr-balogh))
+- ramz ([@ageekymonk](https://github.com/ageekymonk))

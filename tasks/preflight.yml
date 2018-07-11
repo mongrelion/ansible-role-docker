@@ -1,0 +1,14 @@
+---
+- name: Set backwards compatibility for docker_upgrade var
+  set_fact:
+    docker_version: latest
+  when: upgrade_docker is defined or docker_upgrade is defined
+
+- name: Set backwards compatibility for default_config
+  set_fact:
+    docker_default_config: "{{ default_docker_config }}"
+  when: default_docker_config is defined
+
+- name: apply default daemon config
+  set_fact:
+    docker_json: "{{ docker_default_config | combine(docker_config | default({})) }}"

@@ -1,0 +1,10 @@
+---
+- name: Default variables test
+  hosts: all
+  become: yes
+  roles:
+    - ansible-role-docker
+  vars:
+    docker_default_config:
+      storage-driver: "vfs"
+

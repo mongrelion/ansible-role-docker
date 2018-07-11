@@ -2,8 +2,9 @@ galaxy_info:
   author: Carlos León
   description: Docker
   company: Container Solutions
+  role_name: docker
   license: MIT
-  min_ansible_version: 2.1
+  min_ansible_version: 2.4
   platforms:
   - name: EL
     versions:
