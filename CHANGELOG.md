@@ -1,10 +1,10 @@
 # Change Log
 
-## [**Next release**](https://galaxy.ansible.com/mongrelion/docker)
-
+## [0.2.1](https://galaxy.ansible.com/mongrelion/docker) (2018-07-12)
 **Merged pull requests:**
 
 - Use role\_name in metadata [\#56](https://github.com/mongrelion/ansible-role-docker/pull/56) ([paulfantom](https://github.com/paulfantom))
+- Ansible include module is deprecated in Ansible 2.4 and must be repla… [\#26](https://github.com/mongrelion/ansible-role-docker/pull/26) ([Jaczel](https://github.com/Jaczel))
 
 ## [0.2.0](https://galaxy.ansible.com/mongrelion/docker) (2018-07-09)
 **Closed issues:**
