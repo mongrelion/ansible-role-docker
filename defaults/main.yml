@@ -11,7 +11,7 @@ docker_version: "17.06"
 # docker_upgrade: false
 
 docker_default_config:
-  storage-driver: devicemapper
+  storage-driver: overlay2
   log-level: info
 
 docker_users: []
