@@ -6,7 +6,7 @@ docker_http_proxy: ""
 docker_https_proxy: ""
 docker_no_proxy: ""
 
-docker_version: "18.09.1"
+docker_version: "18.09"
 # docker_version: "latest"
 # docker_upgrade: false
 
